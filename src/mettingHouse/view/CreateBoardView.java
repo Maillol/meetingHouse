@@ -13,16 +13,25 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.EventListenerList;
 
+import mettingHouse.model.BoardGenerator;
+import mettingHouse.model.LinearBoardGenerator;
+import mettingHouse.model.StandardBoardGenerator;
+
 
 public class CreateBoardView extends JPanel implements ActionListener {
 
-    private final EventListenerList listeners = new EventListenerList();
+	private static BoardGenerator[] BOARDGENERATORS = {
+		new StandardBoardGenerator(),
+		new LinearBoardGenerator()
+	} ;
 	
+	
+    private final EventListenerList listeners = new EventListenerList();
 	private JLabel numberOfRoomLabel = new JLabel( "Number of room") ;
-	private JLabel houseTypeLabel = new JLabel( "House Type") ;
+	private JLabel houseTypeLabel    = new JLabel( "House Type") ;
 	private SpinnerNumberModel numberOfRoomModel = new SpinnerNumberModel(8, 2, 80, 1);
-	private JSpinner numberOfRoomField =  new JSpinner( numberOfRoomModel ) ;
-	private JComboBox<String> houseTypeComboBox  = new JComboBox<String>() ;
+	private JSpinner numberOfRoomField = new JSpinner( numberOfRoomModel ) ;
+	private JComboBox<BoardGenerator> houseTypeComboBox  = new JComboBox<BoardGenerator>() ;
 	private JButton validateButton  = new JButton( "Ok" ) ;
 	
 	
@@ -30,9 +39,11 @@ public class CreateBoardView extends JPanel implements ActionListener {
 		super( new GridBagLayout() );
 		
 		validateButton.addActionListener(this) ;
-		houseTypeComboBox.addItem("Standard") ;
-
 		
+		for ( BoardGenerator generator : BOARDGENERATORS ) {
+			houseTypeComboBox.addItem( generator ) ;
+		}
+
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH ;
 
@@ -67,9 +78,9 @@ public class CreateBoardView extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event ) {
 		int nbRoom =  numberOfRoomModel.getNumber().intValue() ;
-		for(CreateBoardListener listener : getCreateBoardListeners()  ) {
-			 String houseType = (String) houseTypeComboBox.getSelectedItem() ;
-			 listener.createBoard( new CreateBoardEvent(nbRoom, houseType)) ;
+		for ( CreateBoardListener listener : getCreateBoardListeners() ) {
+			BoardGenerator houseType = (BoardGenerator) houseTypeComboBox.getSelectedItem() ;
+			listener.createBoard( new CreateBoardEvent(nbRoom, houseType) );
 		}
 	}
 	

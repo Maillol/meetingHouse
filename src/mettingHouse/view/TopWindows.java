@@ -68,13 +68,13 @@ public class TopWindows extends JFrame {
 	private TopWindows( Game game) {
 		super();
 		this.game = game ;
-		setSize(640,480); //On donne une taille à notre fenêtre
-		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		setResizable(true); //On interdit pas la redimensionnement de la fenêtre
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix
+		setSize(640,480); 
+		setLocationRelativeTo(null); 
+		setResizable(true); 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		setTitle("metting room") ;
 
-		putPlayersView  = new PutPlayersView( new String[] { "human", "PM_1" }, game ) ;
+		putPlayersView  = new PutPlayersView( game ) ;
 		createBoardView = new CreateBoardView() ;
 		scoreView       = new ScoreView( game ) ;
 		roundView 		= new RoundView( game ) ;

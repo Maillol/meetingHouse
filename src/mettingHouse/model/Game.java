@@ -62,19 +62,21 @@ public class Game  {
 		return winner;
 	}
 
-	public void addPlayer( String name, String type) {
+	public void addPlayer( String name, AI type ) {
 		Player player ;
-		if ( type == "human" ) {
+		if ( type.toString() == "human" ) {
 			if ( human != null ) {
 				fireHumanPlayerAlreadyExists( human ) ;
 				return ;
 			}
 			player = new Player( name ) ;
 			human = player ;
-		} 
-		else {
-			player = new PM_1(name) ; 
 		}
+		else {
+			player = new PlayerWithAI( name, type ) ;
+		}
+
+		// Test if the new player already exist.
 		if ( ! players.contains( player ) ) {			
 			players.add( player ) ; 
 			scoreByRound.put( player, new ArrayList<Integer>()) ;
@@ -88,24 +90,20 @@ public class Game  {
 		this.endScore = endScore ;
 	}
 
+
 	/**
 	 * @param nbRoom
 	 * @param algo nom de l'algo (Standard, TwoByTwo )
 	 * @return
 	 */
-	public void createBoard( int nbRoom, String algo ) {
-		RoomGenerator rg = null ;
-		if ( algo.equals( "Standard" ) ) {
-			rg = new StandardRoomGenerator() ;
-		}
-
-		if ( rg != null )
-			board = rg.generate( nbRoom ) ;
+	public void createBoard( int nbRoom, BoardGenerator algo ) {
+		board = algo.generate(nbRoom) ;
 		board.centerRoomsPosition() ;
 	}
 
+	
 	/**
-	 * place les piece et les attributs aux joueurs.
+	 * place les pieces et les attributs aux joueurs.
 	 */
 	public Player start() {
 		for ( Player player : players ) {
@@ -115,7 +113,7 @@ public class Game  {
 			}
 		}
 
-        for (Room room : getBoard().getRooms_placed() ) {
+        for (Room room : getBoard().getRoomsPlaced() ) {
         	Player player = nextPlayer() ;
 			Piece piece = room.CreatePiece( "a piece" );
 			piece.setPlayer( player ) ;
@@ -170,6 +168,7 @@ public class Game  {
 		for (Piece piece : board.getPieceRemoved()) {
 			piece.getPlayer().updateScore( point ) ;
 			point++ ;
+			System.out.println( "UPDATE poin for " + piece ) ; 
 		}
 
 		board.getSurvivor().getPlayer().updateScore(point) ;

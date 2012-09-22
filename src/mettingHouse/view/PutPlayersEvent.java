@@ -1,19 +1,21 @@
 package mettingHouse.view;
 
+import mettingHouse.model.AI;
+
 public class PutPlayersEvent {
 	private String name ;
-	private String ia ;
+	private AI ai ;
 
-	public PutPlayersEvent( String name, String ia ) {
+	public PutPlayersEvent( String name, AI ai ) {
 		this.name = name ;
-		this.ia = ia ;
+		this.ai = ai ;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public String getIa() {
-		return ia;
+	public AI getIa() {
+		return ai;
 	}
 }

@@ -121,7 +121,7 @@ import mettingHouse.view.PieceDrawable;
 	
 		public void update( Board board ) {
 			rooms.clear() ;
-			for ( Room room : board.getRooms_placed() ) {
+			for ( Room room : board.getRoomsPlaced() ) {
 				rooms.add( new RoomDrawable( room, this ) ) ;
 			}
 	
@@ -152,7 +152,6 @@ import mettingHouse.view.PieceDrawable;
 	
 		@Override
 		public void piecesMoved( Piece p, Room from ) {
-			//System.out.println( "move" + p + " from" + from +  " to" + p.getRoom() );
 			SwingUtilities.invokeLater(
 					new Runnable() {
 						public void run() {

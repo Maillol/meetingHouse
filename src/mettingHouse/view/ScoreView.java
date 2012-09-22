@@ -34,6 +34,7 @@ public class ScoreView extends JPanel {
 		c.ipadx = 5 ;
 		c.ipady = 5 ;
 		c.gridy = 1 ;
+		System.out.println( "VIEW UPDATE" + game.getScoreByRound() );
 		for (Entry<Player, ArrayList<Integer>> entry : game.getScoreByRound().entrySet() ) {
 			c.gridx = 0 ;
 			add( new JLabel( entry.getKey().toString() ), c ) ;

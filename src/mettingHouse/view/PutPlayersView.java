@@ -16,23 +16,29 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.EventListenerList;
 
+import mettingHouse.model.AI;
+import mettingHouse.model.AI_1;
 import mettingHouse.model.Game;
 import mettingHouse.model.GameListener;
 import mettingHouse.model.Player;
 
 public class PutPlayersView extends JPanel implements ActionListener, GameListener {
 
+	private static AI[] AIS = {
+		new AI_1(),
+	} ;
+	
 	private final EventListenerList listeners  = new EventListenerList();
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();;
 	private JList<String> playersList          = new JList<String>( listModel ) ;
 	private JTextField playerNameField         = new JTextField() ;
-	private JComboBox<String> playerTypeComboBox = new JComboBox<String>() ;
+	private JComboBox<AI> playerTypeComboBox = new JComboBox<AI>() ;
 	private JButton addPlayerButton = new JButton( "add" ) ;
 	private JLabel endScoreLabel = new JLabel( "Final score" ) ;
 	private JTextField endScoreField = new JTextField( "50" ) ;
 	private JButton validateButton  = new JButton( "ok" ) ;
 	
-	public PutPlayersView( String[] PlayerType, Game game ) {
+	public PutPlayersView( Game game ) {
 		super();
 		game.addGameListener(this) ;
 		playersList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -41,10 +47,21 @@ public class PutPlayersView extends JPanel implements ActionListener, GameListen
 		JScrollPane listScroller = new JScrollPane(playersList);
 		
 		
-		for (String type : PlayerType) {
-			playerTypeComboBox.addItem( type ) ;    
-		}
+		playerTypeComboBox.addItem( new AI() {
+			@Override
+			public boolean play() {
+				return false;
+			}
+			
+			public String toString() {
+				return "human" ;
+			}
+		} ) ;
 		
+		for (AI ai : AIS) {
+			playerTypeComboBox.addItem( ai ) ;
+		}
+	
 		setLayout( new GridBagLayout() ) ;
 		GridBagConstraints c = new GridBagConstraints();
 		addPlayerButton.addActionListener(this) ;
@@ -99,9 +116,9 @@ public class PutPlayersView extends JPanel implements ActionListener, GameListen
         }	
 	}
 	
-	private void firePutPlayers( String name, String ia ) {
+	private void firePutPlayers( String name, AI ai ) {
 		 for( PutPlayersListener listener : getPutPlayersListeners() ) {
-			 listener.putPlayer( new PutPlayersEvent(name, ia) ) ;
+			 listener.putPlayer( new PutPlayersEvent(name, ai) ) ;
          }	
 	}
 	
@@ -117,10 +134,10 @@ public class PutPlayersView extends JPanel implements ActionListener, GameListen
 	public void actionPerformed(ActionEvent event) {
 		if ( event.getSource() == addPlayerButton ) {
 			String name = playerNameField.getText() ;
-			String type = (String)playerTypeComboBox.getSelectedItem() ;
+			AI ai = (AI)playerTypeComboBox.getSelectedItem() ;
 			playerNameField.setText("");
 			playerNameField.requestFocus() ;
-			firePutPlayers( name, type ) ;
+			firePutPlayers( name, ai ) ;
 		}
 
 		else if  ( event.getSource() == validateButton ) {

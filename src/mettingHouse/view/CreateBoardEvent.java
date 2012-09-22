@@ -1,12 +1,12 @@
 package mettingHouse.view;
 
-import java.awt.AWTEvent;
+import mettingHouse.model.BoardGenerator;
 
 public class CreateBoardEvent {
 	private int nbRoom ;
-	private String typeHouse ;
+	private BoardGenerator typeHouse ;
 	
-	CreateBoardEvent( int nbRoom, String typeHouse ) {
+	CreateBoardEvent( int nbRoom, BoardGenerator typeHouse ) {
 		this.nbRoom = nbRoom ; 
 		this.typeHouse = typeHouse ;
 	}
@@ -15,7 +15,7 @@ public class CreateBoardEvent {
 		return nbRoom;
 	}
 
-	public String getTypeHouse() {
+	public BoardGenerator getTypeHouse() {
 		return typeHouse;
 	}
 }

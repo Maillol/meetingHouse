@@ -48,7 +48,7 @@ public class RoundCtrl implements MouseListener {
             	e.printStackTrace() ;
             }
             
-            boolean endOfRound = ((PlayerWithAI) p).run() ;
+            boolean endOfRound = ((PlayerWithAI) p).play() ;
 
             try {
             	Thread.sleep(500);
@@ -58,6 +58,7 @@ public class RoundCtrl implements MouseListener {
             }
 
 			if ( endOfRound ) {
+				game.updateScore() ;
 				topView.showScoreView() ; 
 				break ;
 			} 
@@ -102,6 +103,7 @@ public class RoundCtrl implements MouseListener {
 							boolean endOfRound = game.getBoard().removePiece( pieceSelected ) ;
 							pieceSelected = null ;
 							if ( endOfRound ) {
+								game.updateScore() ;
 								topView.showScoreView() ;
 							} 
 							else {

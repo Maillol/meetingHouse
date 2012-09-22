@@ -22,68 +22,68 @@ public class Boardtest {
 	
     @Test
     public void getNrect() {
-		Rect r1 = Board.getNrect( room_v, true );
+		Rect r1 = Board.getNRect( room_v, true );
 		assertEquals( "test 1", new Rect( 32, 28, 2, 4 ), r1) ;
 
-		Rect r2 = Board.getNrect( room_v, false );
+		Rect r2 = Board.getNRect( room_v, false );
 		assertEquals( "test 2", new Rect( 31, 30, 4, 2 ), r2) ;
 
-		Rect r3 = Board.getNrect( room_h, true );
+		Rect r3 = Board.getNRect( room_h, true );
 		assertEquals( "test 3", new Rect( 33, 28, 2, 4 ), r3) ;
 
-		Rect r4 = Board.getNrect( room_h, false );
+		Rect r4 = Board.getNRect( room_h, false );
 		assertEquals( "test 4", new Rect( 32, 30, 4, 2 ), r4) ;
     }
    
     @Test
     public void getSrect() {
-		Rect r1 = Board.getSrect( room_v, true );
+		Rect r1 = Board.getSRect( room_v, true );
 		assertEquals( "test 1", new Rect( 32, 36, 2, 4 ), r1) ;
 
-		Rect r2 = Board.getSrect( room_v, false );
+		Rect r2 = Board.getSRect( room_v, false );
 		assertEquals( "test 2", new Rect( 31, 36, 4, 2 ), r2) ;
 
-		Rect r3 = Board.getSrect( room_h, true );
+		Rect r3 = Board.getSRect( room_h, true );
 		assertEquals( "test 3", new Rect( 33, 34, 2, 4 ), r3) ;
 
-		Rect r4 = Board.getSrect( room_h, false );
+		Rect r4 = Board.getSRect( room_h, false );
 		assertEquals( "test 4", new Rect( 32, 34, 4, 2 ), r4) ;
     }
 
     @Test
     public void getErect() {
-		Rect r1 = Board.getErect( room_v, true );
+		Rect r1 = Board.getERect( room_v, true );
 		assertEquals( "test 1", new Rect( 30, 32, 2, 4 ), r1) ;
 
-		Rect r2 = Board.getErect( room_v, false );
+		Rect r2 = Board.getERect( room_v, false );
 		assertEquals( "test 2", new Rect( 28, 33, 4, 2 ), r2) ;
 
-		Rect r3 = Board.getErect( room_h, true );
+		Rect r3 = Board.getERect( room_h, true );
 		assertEquals( "test 3", new Rect( 30, 31, 2, 4 ), r3) ;
 
-		Rect r4 = Board.getErect( room_h, false );
+		Rect r4 = Board.getERect( room_h, false );
 		assertEquals( "test 4", new Rect( 28, 32, 4, 2 ), r4) ;
     }
     
     @Test
     public void getWrect() {
-		Rect r1 = Board.getWrect( room_v, true );
+		Rect r1 = Board.getWRect( room_v, true );
 		assertEquals( "test 1", new Rect( 34, 32, 2, 4 ), r1) ;
 
-		Rect r2 = Board.getWrect( room_v, false );
+		Rect r2 = Board.getWRect( room_v, false );
 		assertEquals( "test 2", new Rect( 34, 33, 4, 2 ), r2) ;
 
-		Rect r3 = Board.getWrect( room_h, true );
+		Rect r3 = Board.getWRect( room_h, true );
 		assertEquals( "test 3", new Rect( 36, 31, 2, 4 ), r3) ;
 
-		Rect r4 = Board.getWrect( room_h, false );
+		Rect r4 = Board.getWRect( room_h, false );
 		assertEquals( "test 4", new Rect( 36, 32, 4, 2 ), r4) ;
     }
     
     @Test
     public void getErect2() {
     	room_h.rect.setPosition(0, 0) ;
-		Rect r = Board.getErect( room_h, true );
+		Rect r = Board.getERect( room_h, true );
 		assertEquals( "test 3", new Rect( -2, -1, 2, 4 ), r) ;
     }
     

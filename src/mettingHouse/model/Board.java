@@ -64,7 +64,6 @@ public class Board {
 			if( getPiecesPlaced().size() == 1 ) { 
 				survivor = getPiecesPlaced().get(0) ;
 				fireOnePiece( survivor ) ;
-				System.out.println( "END OF TURN" );
 				return true ;
 			}
 		}
@@ -138,37 +137,37 @@ public class Board {
 		Rect tmp ;
 		for (Room room_placed : rooms_placed) {
 			if ( room_placed.getN() == null ) {
-				tmp = getNrect( room_placed, true ) ;
+				tmp = getNRect( room_placed, true ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
-				tmp = getNrect( room_placed, false ) ;
+				tmp = getNRect( room_placed, false ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
 			}
 	
 			if ( room_placed.getS() == null ) {
-				tmp = getSrect( room_placed, true ) ;
+				tmp = getSRect( room_placed, true ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
-				tmp = getSrect( room_placed, false ) ;
+				tmp = getSRect( room_placed, false ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
 			}
 	
 			if ( room_placed.getE() == null ) {
-				tmp = getErect( room_placed, true ) ;
+				tmp = getERect( room_placed, true ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
-				tmp = getErect( room_placed, false ) ;
+				tmp = getERect( room_placed, false ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
 			}
 			
 			if ( room_placed.getW() == null ) {
-				tmp = getWrect( room_placed, true ) ;
+				tmp = getWRect( room_placed, true ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
-				tmp = getWrect( room_placed, false ) ;
+				tmp = getWRect( room_placed, false ) ;
 				if ( isFreePlace( tmp ) )
 						freePlaces.add( tmp ) ;
 			}
@@ -177,11 +176,11 @@ public class Board {
 		return freePlaces ;
 	}
 
-	public ArrayList<Room> getRooms_placed() {
+	public ArrayList<Room> getRoomsPlaced() {
 		return this.rooms_placed ;
 	}
 
-	public static Rect getNrect( Room room, boolean vertical )
+	public static Rect getNRect( Room room, boolean vertical )
 	{
 		if ( room.isVertical() ) {
 			if ( vertical )
@@ -198,7 +197,7 @@ public class Board {
 		}
 	}
 
-	public static Rect getSrect( Room room, boolean vertical )
+	public static Rect getSRect( Room room, boolean vertical )
 	{
 		if ( room.isVertical() ) {
 			if ( vertical )
@@ -215,7 +214,7 @@ public class Board {
 		}
 	}
 	
-	public static Rect getErect( Room room, boolean vertical )
+	public static Rect getERect( Room room, boolean vertical )
 	{
 		if ( room.isVertical() ) {
 			if ( vertical )
@@ -232,7 +231,7 @@ public class Board {
 		}
 	}
 
-	public static Rect getWrect( Room room, boolean vertical )
+	public static Rect getWRect( Room room, boolean vertical )
 	{
 		if ( room.isVertical() ) {
 			if ( vertical )
@@ -251,6 +250,32 @@ public class Board {
 	public Room placeRoom( int x, int y, boolean vertical ) {
 		Room room = new Room( vertical ) ;
 		room.rect.setPosition(x, y) ;
+		if ( isFreePlace( room.rect ) ) {
+			if ( rooms_placed.size() == 0 ) {
+				min_x = x ;
+				min_y = y ;
+			} else {
+				if ( x <  min_x )
+					min_x = x ;
+				if ( y < min_y )
+					min_y = y ;
+			}	
+			rooms_placed.add( room ) ;
+			for (Room room_placed : rooms_placed) {
+				int num_gate = room.rect.connected( room_placed.rect ) ;
+				if ( num_gate > -1 )
+					room.join( room_placed, num_gate ) ;
+			}
+			return room;
+		}
+		return null ;
+	}
+	
+	public Room placeRoom( Rect place ) {
+		int x = place.x ;
+		int y = place.y ;
+		Room room = new Room( place.w < place.h ) ;
+		room.rect.setPosition( x, y) ;
 		if ( isFreePlace( room.rect ) ) {
 			if ( rooms_placed.size() == 0 ) {
 				min_x = x ;
@@ -292,4 +317,7 @@ public class Board {
 			}
 		}
 	}
+	
+	
+	
 }

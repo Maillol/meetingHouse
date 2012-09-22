@@ -17,11 +17,13 @@ import mettingHouse.model.boardElement.Room;
  * @author maillol
  *
  */
-public abstract class PlayerWithAI extends Player {
-	protected Board board ;
-	
-	public  PlayerWithAI(String name) {
+public class PlayerWithAI extends Player {
+	private Board board ;
+	private AI ai; 
+
+	public  PlayerWithAI(String name, AI ai ) {
 		super( name ) ;
+		this.ai = ai ;
 	}
 
 	/**
@@ -58,12 +60,13 @@ public abstract class PlayerWithAI extends Player {
 	}
 	
 	
-	abstract public String getType() ;
-	
 	/**
 	 * Joue un tour.
 	 * @return la valeur des apelle à board.remove( Piece p ) ou à board.move( Piece p ).
 	 */
-	abstract public boolean run() ;
+	public boolean play() {
+		ai.setContext(this, board) ;
+		return ai.play() ;
+	}
 
 }
