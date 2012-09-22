@@ -13,6 +13,10 @@ import java.util.HashMap;
 
 import mettingHouse.model.boardElement.Piece;
 
+/**
+ * This class manage link between Piece instance and PieceDrawable instance.
+ * Several getPieceDrawable call with the same Piece generate PieceDrawable with the same image member. 
+ */
 public class PieceDrawable implements Drawable {
 
 	static private HashMap<Piece,PieceDrawable> instances = new HashMap<Piece,PieceDrawable>() ;
